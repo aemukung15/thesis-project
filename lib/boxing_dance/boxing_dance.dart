@@ -44,14 +44,29 @@ class _boxing_danceState extends State<boxing_dance> {
         backgroundColor: const Color.fromARGB(255, 80, 40, 4),
       ),
       body: FutureBuilder(
-        future: getPayload(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data.toString());
-          }
-          return CircularProgressIndicator();
-        },
-      ),
+  future: getPayload(),
+  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    if (snapshot.connectionState == ConnectionState.done) {
+      if (snapshot.hasData) {
+        var result = snapshot.data;
+        return ListView(
+          children: [
+            ListTile(title: Text(result.stepId.toString()),),
+            ListTile(title: Text(result.name),),
+            ListTile(title: Text(result.detail),),
+            ListTile(title: Text(result.stepImage),),
+            ListTile(title: Text(result.muscleImage),),
+          ],
+        );
+      } else if (snapshot.hasError) {
+        return Text("Error: ${snapshot.error}");
+      }
+    }
+    return CircularProgressIndicator(); // Handle other connection states
+  },
+),
+
+
       endDrawer: const MyDrawer(),
     );
   }
