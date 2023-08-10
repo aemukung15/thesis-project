@@ -1,5 +1,5 @@
 // ignore_for_file: file_names
-import '../model/provider.dart';
+import 'Payload.dart';
 
 class ThaiDthoxingModel {
   String msg;

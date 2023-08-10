@@ -23,7 +23,6 @@ class boxing_dance1_1 extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          // Background image container with BoxDecoration
           SizedBox(
             width: double.infinity,
             height: double.infinity,

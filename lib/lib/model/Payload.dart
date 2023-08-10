@@ -1,3 +1,7 @@
+// ignore_for_file: file_names
+
+import 'dart:convert';
+
 class Payload {
   String stepId;
   String name;
@@ -29,3 +33,6 @@ class Payload {
         "muscle_image": muscleImage,
       };
 }
+
+Payload payloadFromJson(String stf) => Payload.fromJson(json.decode(stf));
+String payloadToJson(Payload data) => json.encode(data.toJson());

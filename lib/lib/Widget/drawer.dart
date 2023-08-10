@@ -2,6 +2,7 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:miniproject/boxing_dance/boxing_dance.dart';
 import 'package:miniproject/boxing_dance/boxing_dance1_10.dart';
 import 'package:miniproject/boxing_dance/boxing_dance1_11.dart';
 import 'package:miniproject/boxing_dance/boxing_dance1_12.dart';
@@ -124,6 +125,17 @@ class _MyDrawerState extends State<MyDrawer> {
                     'จำนวน 12 ท่า',
                   ),
                   children: [
+                    ListTile(
+                      title: const Text('test'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const boxing_dance(),
+                          ),
+                        );
+                      },
+                    ),
                     ListTile(
                       title: const Text('ท่าเสือออกจากเหล่า'),
                       onTap: () {
