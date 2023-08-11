@@ -1,5 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:miniproject/boxing_dance/boxing_dance1_10.dart';
 import 'package:miniproject/boxing_dance/boxing_dance1_11.dart';
@@ -33,8 +35,9 @@ import 'package:miniproject/lib/model/step_model.dart';
 import 'package:miniproject/manual.dart';
 import 'package:flutter/services.dart';
 
-import '../../boxing_dance/boxing_dance.dart'; // Add this import statement
-
+import '../../boxing_dance/boxing_dance.dart';
+// Add this import statement
+import 'package:http/http.dart' as http;
 // Rest of your code...
 
 class MyDrawer extends StatefulWidget {
@@ -47,6 +50,100 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   // ... other code ...
+
+  StepModel? _step_type_1;
+  CountStepModel? _count_step_type_1;
+
+  StepModel? _step_type_2;
+  CountStepModel? _count_step_type_2;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchStepDataStepType1();
+    _fetchStepDataStepType2();
+    _fetchCountDataStep1();
+    _fetchCountDataStep2();
+  }
+
+  Future<void> _fetchStepDataStepType1() async {
+    try {
+      final response =
+          await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/all/1"));
+      // print("Response Status Code: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        final res = StepModel.fromJson(jsonDecode(response.body));
+        // print(response.body);
+        setState(() {
+          _step_type_1 = res;
+        });
+      } else {
+        print("Error fetching data. Status code: ${response.statusCode}");
+      }
+    } catch (error) {
+      // Handle error appropriately, e.g., log or show a message
+      print("Error fetching data: $error");
+    }
+  }
+
+  Future<void> _fetchStepDataStepType2() async {
+    try {
+      final response =
+          await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/all/2"));
+      // print("Response Status Code: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        final res = StepModel.fromJson(jsonDecode(response.body));
+        // print(response.body);
+        setState(() {
+          _step_type_2 = res;
+        });
+      } else {
+        print("Error fetching data. Status code: ${response.statusCode}");
+      }
+    } catch (error) {
+      // Handle error appropriately, e.g., log or show a message
+      print("Error fetching data: $error");
+    }
+  }
+
+  Future<void> _fetchCountDataStep1() async {
+    try {
+      final response =
+          await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/count/1"));
+      if (response.statusCode == 200) {
+        final res = CountStepModel.fromJson(jsonDecode(response.body));
+        // print(response.body);
+        setState(() {
+          _count_step_type_1 = res;
+        });
+      } else {
+        print("Error fetching data. Status code: ${response.statusCode}");
+      }
+    } catch (error) {
+      // Handle error appropriately, e.g., log or show a message
+      print("Error fetching data: $error");
+    }
+  }
+
+  Future<void> _fetchCountDataStep2() async {
+    try {
+      final response =
+          await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/count/2"));
+      // print("Response Status Code: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        final res = CountStepModel.fromJson(jsonDecode(response.body));
+        // print(response.body);
+        setState(() {
+          _count_step_type_2 = res;
+        });
+      } else {
+        print("Error fetching data. Status code: ${response.statusCode}");
+      }
+    } catch (error) {
+      // Handle error appropriately, e.g., log or show a message
+      print("Error fetching data: $error");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,8 +209,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => BoxingDance()),
+                      MaterialPageRoute(builder: (context) => BoxingDance()),
                     );
                   },
                 ),
@@ -136,8 +232,9 @@ class _MyDrawerState extends State<MyDrawer> {
                     color: Color.fromARGB(255, 80, 40, 4),
                   ),
                   title: const Text('ท่ารำเดี่ยว'),
-                  subtitle: const Text(
-                    'จำนวน 14 ท่า',
+                  subtitle: Text(
+'จำนวน ${_count_step_type_1 != null ? "${_count_step_type_1?.count}" : "0"} ท่า',
+
                   ),
                   children: [
                     ListTile(

@@ -42,3 +42,22 @@ class StepModel {
     return data;
   }
 }
+
+class CountStepModel {
+  String? stepType;
+  int? count;
+
+  CountStepModel({this.stepType, this.count});
+
+  CountStepModel.fromJson(Map<String, dynamic> json) {
+    stepType = json['step_type'];
+    count = json['count'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['step_type'] = this.stepType;
+    data['count'] = this.count;
+    return data;
+  }
+}
