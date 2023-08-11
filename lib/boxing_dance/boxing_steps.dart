@@ -1,16 +1,59 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show AppBar, AssetImage, Border, BorderRadius, BoxDecoration, BoxFit, BuildContext, Center, Color, Colors, Column, Container, CrossAxisAlignment, DecorationImage, Dialog, EdgeInsets, ElevatedButton, Expanded, FontWeight, GestureDetector, Icon, Icons, Image, Key, MainAxisAlignment, Navigator, Padding, Row, Scaffold, Scrollbar, SelectionArea, SingleChildScrollView, Size, SizedBox, Stack, State, StatefulWidget, Text, TextStyle, Widget, showDialog;
+
 import 'package:miniproject/lib/Widget/drawer.dart';
 import 'package:miniproject/lib/Widget/slide2.dart';
+import 'package:miniproject/lib/model/step_model.dart';
+import '../services/step_services.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-// ignore: camel_case_types
-class boxing_dance1_11 extends StatelessWidget {
-  const boxing_dance1_11({super.key});
+class BoxingSteps extends StatefulWidget {
+  final String stepId;
+
+  const BoxingSteps({Key? key, required this.stepId}) : super(key: key);
+
+  @override
+  _BoxingStepsState createState() => _BoxingStepsState();
+}
+
+class _BoxingStepsState extends State<BoxingSteps> {
+  final StepService _stepService = StepService();
+  StepModel? _stepData;
+  // String stepId = 's_1_4'; // Replace with the desired step ID
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchStepData();
+  }
+
+  Future<void> _fetchStepData() async {
+    try {
+      final response = await http.get(
+          Uri.parse("http://10.0.2.2:8000/steps/get/step_id/${widget.stepId}"));
+      print(widget.stepId);
+      print("Response Status Code: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        final res = StepModel.fromJson(jsonDecode(response.body));
+        // print(response.body);
+        setState(() {
+          _stepData = res;
+        });
+      } else {
+        print("Error fetching data. Status code: ${response.statusCode}");
+      }
+    } catch (error) {
+      // Handle error appropriately, e.g., log or show a message
+      print("Error fetching data: $error");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'ท่าทรพีชนพ่อ',
+        title: Text(
+          _stepData != null ? "${_stepData!.name}" : "",
           style: TextStyle(
             fontFamily: 'TH SarabunPSK',
             fontSize: 25,
@@ -18,12 +61,11 @@ class boxing_dance1_11 extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-          centerTitle: true, 
-          backgroundColor: const Color.fromARGB(255, 80, 40, 4),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 80, 40, 4),
       ),
       body: Stack(
         children: [
-          // Background image container with BoxDecoration
           SizedBox(
             width: double.infinity,
             height: double.infinity,
@@ -65,7 +107,7 @@ class boxing_dance1_11 extends StatelessWidget {
                                     child: SizedBox(
                                       width: double.infinity,
                                       child: Image.asset(
-                                        "assets/11.png",
+                                        "assets/${_stepData != null ? "${_stepData!.stepImage}.png" : ""}",
                                         fit: BoxFit.contain,
                                       ),
                                     ),
@@ -77,9 +119,10 @@ class boxing_dance1_11 extends StatelessWidget {
                           child: Container(
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             child: Image.asset(
-                              "assets/11.png",
+                              "assets/${_stepData != null ? "${_stepData!.stepImage}" : ""}",
                               width: 300, // Set the desired width for the image
-                              height: 300, // Set the desired height for the image
+                              height:
+                                  300, // Set the desired height for the image
                             ),
                           ),
                         ),
@@ -103,7 +146,7 @@ class boxing_dance1_11 extends StatelessWidget {
                                       child: SizedBox(
                                         width: double.infinity,
                                         child: Image.asset(
-                                          "assets/mgif_11.gif",
+                                          "assets/${_stepData != null ? "${_stepData!.muscleImage}" : ""}",
                                           fit: BoxFit.contain,
                                         ),
                                       ),
@@ -151,7 +194,7 @@ class boxing_dance1_11 extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Scrollbar(
+                        child: Scrollbar(
                           child: SingleChildScrollView(
                             child: Padding(
                               padding: EdgeInsets.all(8),
@@ -160,7 +203,9 @@ class boxing_dance1_11 extends StatelessWidget {
                                 children: <Widget>[
                                   SizedBox(height: 5),
                                   Text(
-                                    "ท่าทรพีชนพ่อ เป็นท่าที่ต่อเนื่องจากท่าเตี้ยต่ำเสือหมอบ มีลักษณะเด่น คือ ผู้แสดงจะตบพื้นอย่างแรง และใช้ศอกทั้งสองข้าง ที่กางออกขวิดลงที่พื้นไปมาอย่างรวดเร็ว",
+                                    _stepData != null
+                                        ? "${_stepData!.detail}"
+                                        : "",
                                     style: TextStyle(
                                       fontFamily: 'TH SarabunPSK',
                                       fontSize: 20,

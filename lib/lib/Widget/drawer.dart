@@ -3,29 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_10.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_11.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_12.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_13.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_14.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_2.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_3.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_4.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_5.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_6.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_7.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_8.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_9.dart';
-import 'package:miniproject/boxing_dance/boxing_dance2_1.dart';
-import 'package:miniproject/boxing_dance/boxing_dance2_2.dart';
-import 'package:miniproject/boxing_dance/boxing_dance2_3.dart';
-import 'package:miniproject/boxing_dance/boxing_dance2_4.dart';
-import 'package:miniproject/boxing_dance/boxing_dance2_5.dart';
-import 'package:miniproject/boxing_dance/boxing_dance2_6.dart';
-import 'package:miniproject/boxing_dance/boxing_dance2_7.dart';
-import 'package:miniproject/boxing_dance/boxing_dance2_8.dart';
-import 'package:miniproject/boxing_dance/boxing_dance1_1.dart';
-import 'package:miniproject/boxing_dance/boxing_dance2_9.dart';
+import 'package:miniproject/boxing_dance/boxing_steps.dart';
 import 'package:miniproject/boxing_dance/developer.dart';
 import 'package:miniproject/boxing_dance/record.dart';
 import 'package:miniproject/home/homepage.dart';
@@ -35,7 +13,6 @@ import 'package:miniproject/lib/model/step_model.dart';
 import 'package:miniproject/manual.dart';
 import 'package:flutter/services.dart';
 
-import '../../boxing_dance/boxing_dance.dart';
 // Add this import statement
 import 'package:http/http.dart' as http;
 // Rest of your code...
@@ -51,99 +28,145 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> {
   // ... other code ...
 
-  StepModel? _step_type_1;
+  // StepModel? _step_type_1;
+  List<StepModel>? _step_type_1;
+
   CountStepModel? _count_step_type_1;
 
-  StepModel? _step_type_2;
+  List<StepModel>? _step_type_2;
   CountStepModel? _count_step_type_2;
 
   @override
   void initState() {
     super.initState();
-    _fetchStepDataStepType1();
-    _fetchStepDataStepType2();
-    _fetchCountDataStep1();
-    _fetchCountDataStep2();
+    // _fetchStepDataStepType1();
+    // _fetchStepDataStepType2();
+    _fetchStepData(1); // Fetch data for step type 1
+    _fetchStepData(2); // Fetch data for step type 2
   }
 
-  Future<void> _fetchStepDataStepType1() async {
+  // Future<void> _fetchStepDataStepType1() async {
+  //   try {
+  //     final response =
+  //         await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/all/1"));
+  //     // print("Response Status Code: ${response.statusCode}");
+  //     if (response.statusCode == 200) {
+  //       final res = StepModel.fromJson(jsonDecode(response.body));
+  //       // print(response.body);
+  //       setState(() {
+  //         _step_type_1 = res;
+  //       });
+  //     } else {
+  //       print("Error fetching data. Status code: ${response.statusCode}");
+  //     }
+  //   } catch (error) {
+  //     // Handle error appropriately, e.g., log or show a message
+  //     print("Error fetching data: $error");
+  //   }
+  // }
+  // Future<void> _fetchStepDataStepType1() async {
+  //   try {
+  //     final response =
+  //         await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/all/1"));
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> responseData = jsonDecode(response.body);
+  //       final List<StepModel> steps =
+  //           responseData.map((data) => StepModel.fromJson(data)).toList();
+
+  //       setState(() {
+  //         _step_type_1 = steps;
+  //       });
+  //     } else {
+  //       print("Error fetching data. Status code: ${response.statusCode}");
+  //     }
+  //   } catch (error) {
+  //     print("Error fetching data: $error");
+  //   }
+  // }
+
+  // Future<void> _fetchStepDataStepType2() async {
+  //   try {
+  //     final response =
+  //         await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/all/2"));
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> responseData = jsonDecode(response.body);
+  //       final List<StepModel> steps =
+  //           responseData.map((data) => StepModel.fromJson(data)).toList();
+
+  //       setState(() {
+  //         _step_type_2 = steps;
+  //       });
+  //     } else {
+  //       print("Error fetching data. Status code: ${response.statusCode}");
+  //     }
+  //   } catch (error) {
+  //     print("Error fetching data: $error");
+  //   }
+  // }
+  Future<void> _fetchStepData(int stepType) async {
     try {
-      final response =
-          await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/all/1"));
-      // print("Response Status Code: ${response.statusCode}");
+      final response = await http
+          .get(Uri.parse("http://10.0.2.2:8000/steps/get/all/$stepType"));
       if (response.statusCode == 200) {
-        final res = StepModel.fromJson(jsonDecode(response.body));
-        // print(response.body);
-        setState(() {
-          _step_type_1 = res;
-        });
+        final List<dynamic> responseData = jsonDecode(response.body);
+        final List<StepModel> steps =
+            responseData.map((data) => StepModel.fromJson(data)).toList();
+
+        if (stepType == 1) {
+          setState(() {
+            _step_type_1 = steps;
+          });
+        } else if (stepType == 2) {
+          setState(() {
+            _step_type_2 = steps;
+          });
+        }
       } else {
         print("Error fetching data. Status code: ${response.statusCode}");
       }
     } catch (error) {
-      // Handle error appropriately, e.g., log or show a message
       print("Error fetching data: $error");
     }
   }
 
-  Future<void> _fetchStepDataStepType2() async {
-    try {
-      final response =
-          await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/all/2"));
-      // print("Response Status Code: ${response.statusCode}");
-      if (response.statusCode == 200) {
-        final res = StepModel.fromJson(jsonDecode(response.body));
-        // print(response.body);
-        setState(() {
-          _step_type_2 = res;
-        });
-      } else {
-        print("Error fetching data. Status code: ${response.statusCode}");
-      }
-    } catch (error) {
-      // Handle error appropriately, e.g., log or show a message
-      print("Error fetching data: $error");
-    }
-  }
+  // Future<void> _fetchCountDataStep1() async {
+  //   try {
+  //     final response =
+  //         await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/count/1"));
+  //     if (response.statusCode == 200) {
+  //       final res = CountStepModel.fromJson(jsonDecode(response.body));
+  //       // print(response.body);
+  //       setState(() {
+  //         _count_step_type_1 = res;
+  //       });
+  //     } else {
+  //       print("Error fetching data. Status code: ${response.statusCode}");
+  //     }
+  //   } catch (error) {
+  //     // Handle error appropriately, e.g., log or show a message
+  //     print("Error fetching data: $error");
+  //   }
+  // }
 
-  Future<void> _fetchCountDataStep1() async {
-    try {
-      final response =
-          await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/count/1"));
-      if (response.statusCode == 200) {
-        final res = CountStepModel.fromJson(jsonDecode(response.body));
-        // print(response.body);
-        setState(() {
-          _count_step_type_1 = res;
-        });
-      } else {
-        print("Error fetching data. Status code: ${response.statusCode}");
-      }
-    } catch (error) {
-      // Handle error appropriately, e.g., log or show a message
-      print("Error fetching data: $error");
-    }
-  }
-
-  Future<void> _fetchCountDataStep2() async {
-    try {
-      final response =
-          await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/count/2"));
-      // print("Response Status Code: ${response.statusCode}");
-      if (response.statusCode == 200) {
-        final res = CountStepModel.fromJson(jsonDecode(response.body));
-        // print(response.body);
-        setState(() {
-          _count_step_type_2 = res;
-        });
-      } else {
-        print("Error fetching data. Status code: ${response.statusCode}");
-      }
-    } catch (error) {
-      // Handle error appropriately, e.g., log or show a message
-      print("Error fetching data: $error");
-    }
-  }
+  // Future<void> _fetchCountDataStep2() async {
+  //   try {
+  //     final response =
+  //         await http.get(Uri.parse("http://10.0.2.2:8000/steps/get/count/2"));
+  //     // print("Response Status Code: ${response.statusCode}");
+  //     if (response.statusCode == 200) {
+  //       final res = CountStepModel.fromJson(jsonDecode(response.body));
+  //       // print(response.body);
+  //       setState(() {
+  //         _count_step_type_2 = res;
+  //       });
+  //     } else {
+  //       print("Error fetching data. Status code: ${response.statusCode}");
+  //     }
+  //   } catch (error) {
+  //     // Handle error appropriately, e.g., log or show a message
+  //     print("Error fetching data: $error");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -200,19 +223,7 @@ class _MyDrawerState extends State<MyDrawer> {
                     );
                   },
                 ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.history_edu,
-                    color: Color.fromARGB(255, 80, 40, 4),
-                  ),
-                  title: const Text("ทดสอบ API"),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BoxingDance()),
-                    );
-                  },
-                ),
+
                 ListTile(
                   leading: const Icon(
                     Icons.history_edu,
@@ -233,151 +244,30 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   title: const Text('ท่ารำเดี่ยว'),
                   subtitle: Text(
-'จำนวน ${_count_step_type_1 != null ? "${_count_step_type_1?.count}" : "0"} ท่า',
-
+                    'จำนวน ${_step_type_1?.length} ท่า',
                   ),
                   children: [
-                    ListTile(
-                      title: const Text('ท่าเสือออกจากเหล่า'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const boxing_dance1_1(),
-                          ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าย่างสามขุม'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const boxing_dance1_2(),
-                          ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่ากุมภัณฑ์ถอยทัพ'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_3()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าลับหอกโมกขศักดิ์'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_4()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าตบผาบปราบมาร'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_5()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าทะยานเหยื่อเสือลากหาง'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_6()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าไก่เลียบเล้า'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_7()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าน้าวคันศร'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_8()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่ากินนรเข้าถ้ำ'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_9()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าเตี้ยต่ำเสือหมอบ'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_10()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าทรพีชนพ่อ'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_11()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าล่อแก้วเมขลา'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_12()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าม้ากระทืบโรง'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_13()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าช้างโขลงทะลายป่า'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance1_14()),
-                        );
-                      },
+                    Container(
+                      height: 400, // Adjust the height as needed
+                      child: ListView.builder(
+                        itemCount: _step_type_1?.length,
+                        itemBuilder: (context, index) {
+                          final step = _step_type_1?[index];
+                          return ListTile(
+                            title: Text(step?.name ?? ''),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BoxingSteps(
+                                    stepId: step?.stepId ?? '',
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -386,100 +276,32 @@ class _MyDrawerState extends State<MyDrawer> {
                     Icons.format_list_numbered_rtl,
                     color: Color.fromARGB(255, 80, 40, 4),
                   ),
-                  title: const Text('ท่ารำหมู่'),
-                  subtitle: const Text(
-                    'จำนวน 9 ท่า',
+                  title: Text('ท่ารำหมู่'),
+                  subtitle: Text(
+                    'จำนวน ${_step_type_2?.length} ท่า',
                   ),
                   children: [
-                    ListTile(
-                      title: const Text('ท่ากาเต้นก้อนขี้ไถ'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance2_1()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าหวะพราย'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance2_2()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าย่างสามขุม'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance2_3()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าน้าวเฮียวไผ่'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance2_4()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าไล่ลูกแตก-ตบผาบปราบมาร'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance2_5()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าช้างม้วนงวง'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance2_6()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าทวงฮัก กวักชู้'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance2_7()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าแหลวถลา กาตากปีก'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance2_8()),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('ท่าเลาะเลียบตูบ'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const boxing_dance2_9()),
-                        );
-                      },
+                    Container(
+                      height: 400, // Adjust the height as needed
+                      child: ListView.builder(
+                        itemCount: _step_type_2?.length,
+                        itemBuilder: (context, index) {
+                          final step = _step_type_2?[index];
+                          return ListTile(
+                            title: Text(step?.name ?? ''),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BoxingSteps(
+                                    stepId: step?.stepId ?? '',
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
