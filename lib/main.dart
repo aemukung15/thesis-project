@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:miniproject/home/homepage.dart';
-import 'package:miniproject/lib/Widget/ChangeNotifierProvider.dart';
 import 'package:miniproject/lib/Widget/MultiProvider.dart';
 import 'package:miniproject/srecices/thai_dthoxing_srecices.dart';
 // import '../model/provider.dart';
@@ -10,13 +9,6 @@ import 'package:miniproject/srecices/thai_dthoxing_srecices.dart';
 void main() {
   runApp(const MaterialApp(home: MyApp()));
 }
-
-// void main() => runApp(MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider(create: (_) => ThaiDanceServices()),
-//       ],
-//       child: const MaterialApp(home: MyApp()),
-//     ));
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

@@ -123,7 +123,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   title: const Text('ท่ารำเดี่ยว'),
                   subtitle: const Text(
-                    'จำนวน 12 ท่า',
+                    'จำนวน 14 ท่า',
                   ),
                   children: [
                     ListTile(
