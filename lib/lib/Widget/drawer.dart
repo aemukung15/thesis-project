@@ -1,4 +1,3 @@
-
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
@@ -30,13 +29,13 @@ import 'package:miniproject/boxing_dance/record.dart';
 import 'package:miniproject/home/homepage.dart';
 import 'package:miniproject/bibliography.dart';
 // ignore: unused_import
-import 'package:miniproject/lib/model/ThaiDthoxingModel.dart';
+import 'package:miniproject/lib/model/step_model.dart';
 import 'package:miniproject/manual.dart';
-import 'package:flutter/services.dart'; // Add this import statement
+import 'package:flutter/services.dart';
 
+import '../../boxing_dance/boxing_dance.dart'; // Add this import statement
 
 // Rest of your code...
-
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key});
@@ -57,7 +56,7 @@ class _MyDrawerState extends State<MyDrawer> {
         child: Scrollbar(
           child: SingleChildScrollView(
             child: Column(
-              children: [ 
+              children: [
                 const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -67,7 +66,8 @@ class _MyDrawerState extends State<MyDrawer> {
                           fit: BoxFit.fill,
                           image: AssetImage('assets/Drawer1.png'),
                         ),
-                      ), child: null,
+                      ),
+                      child: null,
                     ),
                   ],
                 ),
@@ -100,6 +100,20 @@ class _MyDrawerState extends State<MyDrawer> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const Manual()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.history_edu,
+                    color: Color.fromARGB(255, 80, 40, 4),
+                  ),
+                  title: const Text("ทดสอบ API"),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BoxingDance()),
                     );
                   },
                 ),
@@ -402,16 +416,16 @@ class _MyDrawerState extends State<MyDrawer> {
                   },
                 ), // Other drawer items...
                 ListTile(
-                leading: const Icon(
-                  Icons.exit_to_app,
-                  color: Color.fromARGB(255, 80, 40, 4),
-                ),
-                title: const Text("ออกจากแอป"),
-                onTap: () {
-                  // Use `SystemNavigator` to exit the app
-                  SystemNavigator.pop();
-                },
-              ),// Other drawer items...
+                  leading: const Icon(
+                    Icons.exit_to_app,
+                    color: Color.fromARGB(255, 80, 40, 4),
+                  ),
+                  title: const Text("ออกจากแอป"),
+                  onTap: () {
+                    // Use `SystemNavigator` to exit the app
+                    SystemNavigator.pop();
+                  },
+                ), // Other drawer items...
               ],
             ),
           ),
