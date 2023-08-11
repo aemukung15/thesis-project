@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'package:miniproject/lib/model/ThaiDthoxingModel.dart';
 
 class ThaiDanceServices with ChangeNotifier {
-  String api = "https://raw.githubusercontent.com/billowdev/json/main/thai_boxing_dance_1.json";
+  
+  String api = "1http://172.28.128.1/steps";
   late ThaiDthoxingModel home; // Use the correct class name here
 
   // Change the return type and variable type to use ThaiDthoxingModel

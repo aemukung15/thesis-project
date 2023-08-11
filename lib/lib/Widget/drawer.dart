@@ -2,7 +2,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:miniproject/boxing_dance/boxing_dance.dart';
 import 'package:miniproject/boxing_dance/boxing_dance1_10.dart';
 import 'package:miniproject/boxing_dance/boxing_dance1_11.dart';
 import 'package:miniproject/boxing_dance/boxing_dance1_12.dart';
@@ -30,6 +29,8 @@ import 'package:miniproject/boxing_dance/developer.dart';
 import 'package:miniproject/boxing_dance/record.dart';
 import 'package:miniproject/home/homepage.dart';
 import 'package:miniproject/bibliography.dart';
+// ignore: unused_import
+import 'package:miniproject/lib/model/ThaiDthoxingModel.dart';
 import 'package:miniproject/manual.dart';
 import 'package:flutter/services.dart'; // Add this import statement
 
@@ -125,17 +126,6 @@ class _MyDrawerState extends State<MyDrawer> {
                     'จำนวน 12 ท่า',
                   ),
                   children: [
-                    ListTile(
-                      title: const Text('test'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const boxing_dance(),
-                          ),
-                        );
-                      },
-                    ),
                     ListTile(
                       title: const Text('ท่าเสือออกจากเหล่า'),
                       onTap: () {
