@@ -46,6 +46,7 @@ import 'package:flutter/material.dart'
         TextStyle,
         Widget,
         showDialog;
+import 'package:miniproject/api_constants.dart';
 
 import 'package:miniproject/lib/Widget/drawer.dart';
 import 'package:miniproject/lib/Widget/slide2.dart';
@@ -68,9 +69,6 @@ class BoxingSteps extends StatefulWidget {
 
 class _BoxingStepsState extends State<BoxingSteps> {
   StepModel? _stepData;
-  // String stepId = 's_1_4'; // Replace with the desired step ID
-  // ignore: non_constant_identifier_names
-  String BASE_URL = "http://10.0.2.2:8000";
 
   @override
   void initState() {
@@ -80,8 +78,8 @@ class _BoxingStepsState extends State<BoxingSteps> {
 
   Future<void> _fetchStepData() async {
     try {
-      final response = await http
-          .get(Uri.parse("${BASE_URL}/steps/get/step_id/${widget.stepId}"));
+      final response = await http.get(Uri.parse(
+          "${ApiConstants.BASE_URL}/steps/get/step_id/${widget.stepId}"));
       print(widget.stepId);
       print("Response Status Code: ${response.statusCode}");
       if (response.statusCode == 200) {
@@ -158,7 +156,7 @@ class _BoxingStepsState extends State<BoxingSteps> {
                                     child: SizedBox(
                                       width: double.infinity,
                                       child: Image.network(
-                                        "${BASE_URL}/images/${_stepData!.stepImage}", // Replace with your image URL
+                                        "${ApiConstants.BASE_URL}/images/${_stepData!.stepImage}", // Replace with your image URL
                                         loadingBuilder: (BuildContext context,
                                             Widget child,
                                             ImageChunkEvent? loadingProgress) {
@@ -179,7 +177,6 @@ class _BoxingStepsState extends State<BoxingSteps> {
                                           }
                                         },
                                       ),
-                      
                                     ),
                                   ),
                                 );
@@ -188,9 +185,8 @@ class _BoxingStepsState extends State<BoxingSteps> {
                           },
                           child: Container(
                             margin: EdgeInsets.symmetric(vertical: 5),
-                            child:
-                                Image.network(
-                              "${BASE_URL}/images/${_stepData?.stepImage}", // Replace with your image URL
+                            child: Image.network(
+                              "${ApiConstants.BASE_URL}/images/${_stepData?.stepImage}", // Replace with your image URL
                               loadingBuilder: (BuildContext context,
                                   Widget child,
                                   ImageChunkEvent? loadingProgress) {
@@ -213,7 +209,6 @@ class _BoxingStepsState extends State<BoxingSteps> {
                             width: 300, // Set the desired width for the image
                             height: 300,
                           ),
-
                         ),
                       ],
                     ),
@@ -228,15 +223,14 @@ class _BoxingStepsState extends State<BoxingSteps> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return Dialog(
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: SizedBox(
-                                            width: double.infinity,
-                                            child: 
-                                            Image.network(
-                                        "${BASE_URL}/images/${_stepData!.muscleImage}", // Replace with your image URL
+                                      child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Image.network(
+                                        "${ApiConstants.BASE_URL}/images/${_stepData!.muscleImage}", // Replace with your image URL
                                         loadingBuilder: (BuildContext context,
                                             Widget child,
                                             ImageChunkEvent? loadingProgress) {
@@ -257,7 +251,7 @@ class _BoxingStepsState extends State<BoxingSteps> {
                                           }
                                         },
                                       ),
-                                        ),
+                                    ),
                                   ));
                                 },
                               );

@@ -28,21 +28,74 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
+  // List<StepModel> _stepType1 = [];
+  // List<StepModel> _stepType2 = [];
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _fetchAndFilterSteps();
+  // }
+
+  // @override
+  // void dispose() {
+  //   // Dispose of any resources here
+  //   _stepType1.clear();
+  //   _stepType2.clear();
+  //   super.dispose();
+  // }
+
+  // Future<void> _fetchAndFilterSteps() async {
+  //   try {
+  //     final response =
+  //         await http.get(Uri.parse("${ApiConstants.BASE_URL}/steps/get/all"));
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> responseData = jsonDecode(response.body);
+  //       final List<StepModel> allSteps =
+  //           responseData.map((data) => StepModel.fromJson(data)).toList();
+
+  //       if (mounted) {
+  //         _stepType1 = allSteps.where((step) => step.stepType == "1").toList();
+  //         _stepType2 = allSteps.where((step) => step.stepType == "2").toList();
+
+  //         setState(() {
+  //           // Update the UI
+  //         });
+  //       }
+  //     } else {
+  //       print("Error fetching data. Status code: ${response.statusCode}");
+  //     }
+  //   } catch (error) {
+  //     print("Error fetching data: $error");
+  //   }
+  // }
   List<StepModel> _stepType1 = [];
   List<StepModel> _stepType2 = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchAndFilterSteps();
+    _loadStepsFromSharedPrefs();
   }
 
-  @override
-  void dispose() {
-    // Dispose of any resources here
-    _stepType1.clear();
-    _stepType2.clear();
-    super.dispose();
+  Future<void> _loadStepsFromSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final stepType1Json = prefs.getString('stepType1');
+    final stepType2Json = prefs.getString('stepType2');
+
+    if (stepType1Json != null && stepType2Json != null) {
+      setState(() {
+        _stepType1 = (jsonDecode(stepType1Json) as List)
+            .map((data) => StepModel.fromJson(data))
+            .toList();
+        _stepType2 = (jsonDecode(stepType2Json) as List)
+            .map((data) => StepModel.fromJson(data))
+            .toList();
+      });
+    } else {
+      await _fetchAndFilterSteps();
+    }
   }
 
   Future<void> _fetchAndFilterSteps() async {
@@ -54,14 +107,17 @@ class _MyDrawerState extends State<MyDrawer> {
         final List<StepModel> allSteps =
             responseData.map((data) => StepModel.fromJson(data)).toList();
 
-        if (mounted) {
-          _stepType1 = allSteps.where((step) => step.stepType == "1").toList();
-          _stepType2 = allSteps.where((step) => step.stepType == "2").toList();
+        _stepType1 = allSteps.where((step) => step.stepType == "1").toList();
+        _stepType2 = allSteps.where((step) => step.stepType == "2").toList();
 
-          setState(() {
-            // Update the UI
-          });
-        }
+        // Save the fetched data in shared preferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('stepType1', jsonEncode(_stepType1));
+        prefs.setString('stepType2', jsonEncode(_stepType2));
+
+        setState(() {
+          // Update the UI
+        });
       } else {
         print("Error fetching data. Status code: ${response.statusCode}");
       }
@@ -69,7 +125,6 @@ class _MyDrawerState extends State<MyDrawer> {
       print("Error fetching data: $error");
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +158,7 @@ class _MyDrawerState extends State<MyDrawer> {
                     "หน้าแรก",
                   ),
                   onTap: () {
-                    _fetchAndFilterSteps();
+                    _loadStepsFromSharedPrefs();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -121,7 +176,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   title: const Text("คู่มือ"),
                   onTap: () {
-                    _fetchAndFilterSteps();
+                    _loadStepsFromSharedPrefs();
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const Manual()),
@@ -136,7 +191,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   title: const Text("ประวัติความเป็นมารำมวยโบราณ"),
                   onTap: () {
-                    _fetchAndFilterSteps();
+                    _loadStepsFromSharedPrefs();
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const record()),
@@ -162,7 +217,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           return ListTile(
                               title: Text(step?.name ?? ''),
                               onTap: () {
-                                _fetchAndFilterSteps();
+                                _loadStepsFromSharedPrefs();
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -196,7 +251,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           return ListTile(
                             title: Text(step?.name ?? ''),
                             onTap: () {
-                              _fetchAndFilterSteps();
+                              _loadStepsFromSharedPrefs();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -219,7 +274,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   title: const Text("คณะผู้พัฒนา"),
                   onTap: () {
-                    _fetchAndFilterSteps();
+                    _loadStepsFromSharedPrefs();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -234,7 +289,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   title: const Text("อ้างอิงข้อมูล"),
                   onTap: () {
-                    _fetchAndFilterSteps();
+                    _loadStepsFromSharedPrefs();
                     Navigator.push(
                       context,
                       MaterialPageRoute(

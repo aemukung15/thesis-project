@@ -200,7 +200,7 @@ class record extends StatelessWidget {
           ),
         ],
       ),
-      endDrawer: const MyDrawer(),
+      endDrawer: MyDrawer(),
     );
   }
 }
