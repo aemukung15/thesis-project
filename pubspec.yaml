@@ -31,10 +31,11 @@ dependencies:
   flutter:
     sdk: flutter
   carousel_slider: ^4.2.1
+  cached_network_image: ^3.2.3
   # carousel_pro: ^1.0.0
   # carousel_pro: ^2.0.0-nullsafety.0  # Example of a null-safe version of carousel_pro package
   google_nav_bar: ^5.0.6
-
+  shared_preferences: ^2.0.10
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

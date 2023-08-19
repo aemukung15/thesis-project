@@ -1,11 +1,61 @@
-import 'package:flutter/material.dart' show AppBar, AssetImage, Border, BorderRadius, BoxDecoration, BoxFit, BuildContext, Center, Color, Colors, Column, Container, CrossAxisAlignment, DecorationImage, Dialog, EdgeInsets, ElevatedButton, Expanded, FontWeight, GestureDetector, Icon, Icons, Image, Key, MainAxisAlignment, Navigator, Padding, Row, Scaffold, Scrollbar, SelectionArea, SingleChildScrollView, Size, SizedBox, Stack, State, StatefulWidget, Text, TextStyle, Widget, showDialog;
+import 'package:flutter/material.dart'
+    show
+        AppBar,
+        AssetImage,
+        Border,
+        BorderRadius,
+        BoxDecoration,
+        BoxFit,
+        BuildContext,
+        Center,
+        CircularProgressIndicator,
+        Color,
+        Colors,
+        Column,
+        Container,
+        CrossAxisAlignment,
+        DecorationImage,
+        Dialog,
+        EdgeInsets,
+        ElevatedButton,
+        Expanded,
+        FontWeight,
+        FutureBuilder,
+        GestureDetector,
+        Icon,
+        Icons,
+        Image,
+        ImageChunkEvent,
+        ImageConfiguration,
+        Key,
+        MainAxisAlignment,
+        Navigator,
+        NetworkImage,
+        Padding,
+        Row,
+        Scaffold,
+        Scrollbar,
+        SelectionArea,
+        SingleChildScrollView,
+        Size,
+        SizedBox,
+        Stack,
+        State,
+        StatefulWidget,
+        Text,
+        TextStyle,
+        Widget,
+        showDialog;
 
 import 'package:miniproject/lib/Widget/drawer.dart';
 import 'package:miniproject/lib/Widget/slide2.dart';
 import 'package:miniproject/lib/model/step_model.dart';
-import '../services/step_services.dart';
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:cached_network_image/cached_network_image.dart';
+
+import '../lib/Widget/network_image.dart';
 
 class BoxingSteps extends StatefulWidget {
   final String stepId;
@@ -17,9 +67,10 @@ class BoxingSteps extends StatefulWidget {
 }
 
 class _BoxingStepsState extends State<BoxingSteps> {
-  final StepService _stepService = StepService();
   StepModel? _stepData;
   // String stepId = 's_1_4'; // Replace with the desired step ID
+  // ignore: non_constant_identifier_names
+  String BASE_URL = "http://10.0.2.2:8000";
 
   @override
   void initState() {
@@ -29,8 +80,8 @@ class _BoxingStepsState extends State<BoxingSteps> {
 
   Future<void> _fetchStepData() async {
     try {
-      final response = await http.get(
-          Uri.parse("http://10.0.2.2:8000/steps/get/step_id/${widget.stepId}"));
+      final response = await http
+          .get(Uri.parse("${BASE_URL}/steps/get/step_id/${widget.stepId}"));
       print(widget.stepId);
       print("Response Status Code: ${response.statusCode}");
       if (response.statusCode == 200) {
@@ -106,10 +157,29 @@ class _BoxingStepsState extends State<BoxingSteps> {
                                     },
                                     child: SizedBox(
                                       width: double.infinity,
-                                      child: Image.asset(
-                                        "assets/${_stepData != null ? "${_stepData!.stepImage}.png" : ""}",
-                                        fit: BoxFit.contain,
+                                      child: Image.network(
+                                        "${BASE_URL}/images/${_stepData!.stepImage}", // Replace with your image URL
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child; // Fully loaded, show the image
+                                          } else {
+                                            // Display a loading indicator while the image is loading
+                                            return CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            );
+                                          }
+                                        },
                                       ),
+                      
                                     ),
                                   ),
                                 );
@@ -117,14 +187,33 @@ class _BoxingStepsState extends State<BoxingSteps> {
                             );
                           },
                           child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            child: Image.asset(
-                              "assets/${_stepData != null ? "${_stepData!.stepImage}" : ""}",
-                              width: 300, // Set the desired width for the image
-                              height:
-                                  300, // Set the desired height for the image
+                            margin: EdgeInsets.symmetric(vertical: 5),
+                            child:
+                                Image.network(
+                              "${BASE_URL}/images/${_stepData?.stepImage}", // Replace with your image URL
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child; // Fully loaded, show the image
+                                } else {
+                                  // Display a loading indicator while the image is loading
+                                  return CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  );
+                                }
+                              },
                             ),
+
+                            width: 300, // Set the desired width for the image
+                            height: 300,
                           ),
+
                         ),
                       ],
                     ),
@@ -140,18 +229,36 @@ class _BoxingStepsState extends State<BoxingSteps> {
                                 builder: (BuildContext context) {
                                   return Dialog(
                                     child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                        child: Image.asset(
-                                          "assets/${_stepData != null ? "${_stepData!.muscleImage}" : ""}",
-                                          fit: BoxFit.contain,
-                                        ),
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: SizedBox(
+                                            width: double.infinity,
+                                            child: 
+                                            Image.network(
+                                        "${BASE_URL}/images/${_stepData!.muscleImage}", // Replace with your image URL
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child; // Fully loaded, show the image
+                                          } else {
+                                            // Display a loading indicator while the image is loading
+                                            return CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            );
+                                          }
+                                        },
                                       ),
-                                    ),
-                                  );
+                                        ),
+                                  ));
                                 },
                               );
                             },
@@ -226,7 +333,7 @@ class _BoxingStepsState extends State<BoxingSteps> {
           ),
         ],
       ),
-      endDrawer: const MyDrawer(),
+      endDrawer: MyDrawer(),
     );
   }
 }
