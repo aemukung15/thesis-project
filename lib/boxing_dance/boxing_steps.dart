@@ -80,8 +80,8 @@ class _BoxingStepsState extends State<BoxingSteps> {
     try {
       final response = await http.get(Uri.parse(
           "${ApiConstants.BASE_URL}/steps/get/step_id/${widget.stepId}"));
-      print(widget.stepId);
-      print("Response Status Code: ${response.statusCode}");
+      // print(widget.stepId);
+      // print("Response Status Code: ${response.statusCode}");
       if (response.statusCode == 200) {
         final res = StepModel.fromJson(jsonDecode(response.body));
         // print(response.body);

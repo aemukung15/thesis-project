@@ -98,6 +98,19 @@ class _MyDrawerState extends State<MyDrawer> {
     }
   }
 
+  @override
+  void dispose() {
+    _clearPrefs();
+
+    super.dispose();
+  }
+
+  Future<void> _clearPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('stepType1');
+    prefs.remove('stepType2');
+  }
+
   Future<void> _fetchAndFilterSteps() async {
     try {
       final response =
@@ -305,6 +318,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   title: const Text("ออกจากแอป"),
                   onTap: () {
+                    _clearPrefs();
                     // Use `SystemNavigator` to exit the app
                     SystemNavigator.pop();
                   },
