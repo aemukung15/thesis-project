@@ -3,6 +3,7 @@ class StepModel {
   String? stepId;
   String? name;
   String? detail;
+  String? stepType;
   String? stepImage;
   String? muscleImage;
   String? createdAt;
@@ -13,6 +14,7 @@ class StepModel {
       this.stepId,
       this.name,
       this.detail,
+      this.stepType,
       this.stepImage,
       this.muscleImage,
       this.createdAt,
@@ -23,6 +25,7 @@ class StepModel {
     stepId = json['step_id'];
     name = json['name'];
     detail = json['detail'];
+    stepType = json['step_type'];
     stepImage = json['step_image'];
     muscleImage = json['muscle_image'];
     createdAt = json['created_at'];
@@ -35,6 +38,7 @@ class StepModel {
     data['step_id'] = this.stepId;
     data['name'] = this.name;
     data['detail'] = this.detail;
+    data['step_type'] = this.stepType;
     data['step_image'] = this.stepImage;
     data['muscle_image'] = this.muscleImage;
     data['created_at'] = this.createdAt;
