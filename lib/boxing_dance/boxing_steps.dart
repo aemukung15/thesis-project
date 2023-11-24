@@ -103,7 +103,7 @@ class _BoxingStepsState extends State<BoxingSteps> {
       appBar: AppBar(
         title: Text(
           _stepData != null ? "${_stepData!.name}" : "",
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: 'TH SarabunPSK',
             fontSize: 25,
             color: Color.fromARGB(255, 255, 255, 255),
@@ -184,7 +184,7 @@ class _BoxingStepsState extends State<BoxingSteps> {
                             );
                           },
                           child: Container(
-                            margin: EdgeInsets.symmetric(vertical: 5),
+                            margin: const EdgeInsets.symmetric(vertical: 5),
                             child: Image.network(
                               "${ApiConstants.BASE_URL}/images/${_stepData?.stepImage}", // Replace with your image URL
                               loadingBuilder: (BuildContext context,
@@ -298,21 +298,21 @@ class _BoxingStepsState extends State<BoxingSteps> {
                         child: Scrollbar(
                           child: SingleChildScrollView(
                             child: Padding(
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Text(
                                     _stepData != null
                                         ? "${_stepData!.detail}"
                                         : "",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'TH SarabunPSK',
                                       fontSize: 20,
                                     ),
                                   ),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                 ],
                               ),
                             ),
@@ -327,7 +327,7 @@ class _BoxingStepsState extends State<BoxingSteps> {
           ),
         ],
       ),
-      endDrawer: MyDrawer(),
+      endDrawer: const MyDrawer(),
     );
   }
 }

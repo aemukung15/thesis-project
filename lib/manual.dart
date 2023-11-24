@@ -31,7 +31,7 @@ class _ManualState extends State<Manual> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'คู่มือ',
+          'วิธีการใช้งาน',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold,

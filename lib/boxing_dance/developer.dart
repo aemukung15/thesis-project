@@ -38,9 +38,6 @@ class developer extends StatelessWidget {
               ),
             ),
           ),
-          // const Expanded(
-          //   child: MySlide2(), // Wrap with Expanded
-          // ),
           GestureDetector(
             child: Center(
               child: SelectionArea(
@@ -89,7 +86,7 @@ class developer extends StatelessWidget {
                                     Image.asset(
                                       "assets/D_2.png",
                                       width:
-                                          400, // Set the desired width for the image
+                                          390, // Set the desired width for the image
                                       height:
                                           600, // Set the desired height for the image
                                     ),
@@ -99,7 +96,7 @@ class developer extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 60),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -137,13 +134,13 @@ class developer extends StatelessWidget {
                                   "assets/DR2.png",
                                   width: 400, // Set the desired width for the image
                                   height:
-                                      600, // Set the desired height for the image
+                                      640, // Set the desired height for the image
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 100),
+                        const SizedBox(height: 80),
                       ],
                     ),
                   ),

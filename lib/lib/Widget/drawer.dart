@@ -187,7 +187,7 @@ class _MyDrawerState extends State<MyDrawer> {
                     Icons.history_edu,
                     color: Color.fromARGB(255, 80, 40, 4),
                   ),
-                  title: const Text("คู่มือ"),
+                  title: const Text("วิธีการใช้งาน"),
                   onTap: () {
                     _loadStepsFromSharedPrefs();
                     Navigator.push(
@@ -196,7 +196,6 @@ class _MyDrawerState extends State<MyDrawer> {
                     );
                   },
                 ),
-
                 ListTile(
                   leading: const Icon(
                     Icons.history_edu,
@@ -211,6 +210,45 @@ class _MyDrawerState extends State<MyDrawer> {
                     );
                   },
                 ),
+                // ExpansionTile(
+                //   leading: const Icon(
+                //     Icons.format_list_numbered_rtl,
+                //     color: Color.fromARGB(255, 80, 40, 4),
+                //   ),
+                //   title: const Text('ท่ารำเดี่ยว'),
+                //   subtitle: Text(
+                //     'จำนวน ${_stepType1?.length ?? 0} ท่า',
+                //   ),
+                //   children: [
+                //     Container(
+                //       height: 900, // Adjust the height as needed
+                //       child: Scrollbar(
+                //         isAlwaysShown: true, // Show the scrollbar always
+                //         child: ListView.builder(
+                //           itemCount: _stepType1?.length ?? 0,
+                //           itemBuilder: (context, index) {
+                //             final step = _stepType1?[index];
+                //             return ListTile(
+                //               title: Text(step?.name ?? ''),
+                //               onTap: () {
+                //                 _loadStepsFromSharedPrefs();
+                //                 Navigator.pushReplacement(
+                //                   context,
+                //                   MaterialPageRoute(
+                //                     builder: (context) => BoxingSteps(
+                //                       stepId: step?.stepId ?? '',
+                //                     ),
+                //                   ),
+                //                 );
+                //               },
+                //             );
+                //           },
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+
                 ExpansionTile(
                   leading: const Icon(
                     Icons.format_list_numbered_rtl,
@@ -222,7 +260,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   children: [
                     Container(
-                      height: 400, // Adjust the height as needed
+                      height: 660, // Adjust the height as needed
                       child: ListView.builder(
                         itemCount: _stepType1?.length,
                         itemBuilder: (context, index) {
@@ -245,6 +283,46 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                   ],
                 ),
+
+                // ExpansionTile(
+                //   leading: const Icon(
+                //     Icons.format_list_numbered_rtl,
+                //     color: Color.fromARGB(255, 80, 40, 4),
+                //   ),
+                //   title: Text('ท่ารำหมู่'),
+                //   subtitle: Text(
+                //     'จำนวน ${_stepType2?.length} ท่า',
+                //   ),
+                //   children: [
+                //     Container(
+                //       height: 500, // Adjust the height as needed
+                //       child: Scrollbar(
+                //         isAlwaysShown: true, // Show the scrollbar always
+                //         child: ListView.builder(
+                //           itemCount: _stepType2?.length,
+                //           itemBuilder: (context, index) {
+                //             final step = _stepType2?[index];
+                //             return ListTile(
+                //               title: Text(step?.name ?? ''),
+                //               onTap: () {
+                //                 _loadStepsFromSharedPrefs();
+                //                 Navigator.push(
+                //                   context,
+                //                   MaterialPageRoute(
+                //                     builder: (context) => BoxingSteps(
+                //                       stepId: step?.stepId ?? '',
+                //                     ),
+                //                   ),
+                //                 );
+                //               },
+                //             );
+                //           },
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+
                 ExpansionTile(
                   leading: const Icon(
                     Icons.format_list_numbered_rtl,
@@ -256,7 +334,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   children: [
                     Container(
-                      height: 400, // Adjust the height as needed
+                      height: 500, // Adjust the height as needed
                       child: ListView.builder(
                         itemCount: _stepType2?.length,
                         itemBuilder: (context, index) {
@@ -280,6 +358,7 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                   ],
                 ),
+
                 ListTile(
                   leading: const Icon(
                     Icons.person_search,

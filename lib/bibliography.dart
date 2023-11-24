@@ -12,7 +12,7 @@ class bibliography extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'อ้างออิงข้อมูล',
+          'อ้างอิงข้อมูล',
           style: TextStyle(
             fontFamily: 'TH SarabunPSK',
             fontSize: 25,
@@ -20,8 +20,8 @@ class bibliography extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-          centerTitle: true, 
-          backgroundColor: const Color.fromARGB(255, 80, 40, 4),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 80, 40, 4),
       ),
       body: Stack(
         children: [
@@ -62,9 +62,9 @@ class bibliography extends StatelessWidget {
                                     Image.asset(
                                       "assets/bibliography.png",
                                       width:
-                                          400, // Set the desired width for the image
+                                          410, // Set the desired width for the image
                                       height:
-                                          800, // Set the desired height for the image
+                                          990, // Set the desired height for the image
                                     ),
                                   ],
                                 ),
